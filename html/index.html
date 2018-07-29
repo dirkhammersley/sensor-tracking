@@ -12,13 +12,15 @@
 </style>
   <script src="https://d3js.org/d3.v5.js"></script>
   <script>
-     
+   function makeNode(x, y){
+
+   	 var circleStats = [1, 1, 1]; //track toggling of circles
      var svgContainer = d3.select("body").append("svg")
-                                         .attr("width", 200)
-                                         .attr("height", 200);
-     var circleStats = [1, 1, 1]
+                                         .attr("width", 115)
+                                         .attr("height", 150)
+                                         .attr("transform", "translate("+ x +", "+ y +")")
      
-     var jsonCircles = [
+     var jsonCircles = [ //circles at corners of rectangle
        {
         "x_axis":30,
         "y_axis":30,
@@ -39,7 +41,7 @@
         "id":2
        }];
 
-     var jsonRect = [
+     var jsonRect = [ //body rectangle
      {
      	"width":65,
      	"height":95,
@@ -86,6 +88,11 @@
                          																					   circleStats[Number(d3.event.target.id.substr(4))] = 0;}
                          															return returnColor;
                                       	})});
+}
+
+makeNode(0,0);
+makeNode(0,0);
+makeNode(0,0);
 
 </script>
 </body>
