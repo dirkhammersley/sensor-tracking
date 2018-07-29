@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>sensors</title>
+</head>
+<body>
+
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script>
+     
+     var svgContainer = d3.select("body").append("svg")
+                                         .attr("width", 200)
+                                         .attr("height", 200);
+     var circleStats = [1, 1, 1]
+     
+     var jsonCircles = [
+       {
+        "x_axis":30,
+        "y_axis":30,
+        "radius":10,
+        "color" : "green",
+        "id":0
+       },{
+        "x_axis":95,
+        "y_axis":30,
+        "radius":10,
+        "color" : "green",
+        "id":1
+       },{
+        "x_axis":95,
+        "y_axis":125,
+        "radius":10,
+        "color" : "green",
+        "id":2
+       }];
+
+     var jsonRect = [
+     {
+     	"width":65,
+     	"height":95,
+     	"x_pos":30,
+     	"y_pos":30,
+     	"color":"gray",
+     	"id":0
+     }];
+
+     var rect = svgContainer.selectAll("rect")
+     							.data(jsonRect)
+     							.enter()
+     							.append("rect");
+
+     var rectAttributes = rect
+     					.attr("x", function(d) {return d.x_pos;})
+     					.attr("y", function(d) {return d.y_pos;})
+     					.attr("width", function(d) {return d.width;})
+     					.attr("height", function(d) {return d.height;})
+     					.style("fill", function(d) {return d.color;})
+
+     var circles = svgContainer.selectAll("circle")
+                               .data(jsonCircles)
+                               .enter()
+                               .append("circle");
+
+    var circleAttributes = circles
+                       .attr("cx", function (d) { return d.x_axis; })
+                       .attr("cy", function (d) { return d.y_axis; })
+                       .attr("r", function (d) { return d.radius; })
+                       .attr("id", function(d){ return "circ" + d.id; })
+                       .style("fill", function(d) { return d.color; });
+
+    var fillCircle = d3.selectAll("circle").on("click", function(){
+                                          d3.select(this).style("fill", function(d) {var returnColor;
+                                          											var curStatus = circleStats[Number(d3.event.target.id.substr(4))]
+                         															if (curStatus == 0) { returnColor = "green"; 
+                         																				  circleStats[Number(d3.event.target.id.substr(4))] = 1;}
+                         															else if (curStatus == 1) { returnColor = "red"; 
+                         																					   circleStats[Number(d3.event.target.id.substr(4))] = 0;}
+                         															return returnColor;
+                                      	})});
+
+</script>
+</body>
+</html>
+
